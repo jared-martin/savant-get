@@ -143,7 +143,7 @@ def get_last_game_date_downloaded(directory_path):
         return last_game_datetime.date()
 
 
-def main(first_game_date, last_game_date, directory_path):
+def get_data_between_dates(first_game_date, last_game_date, directory_path):
     for game_date_gt, game_date_lt in week_long_date_spans_in_season(
             first_game_date, last_game_date):
         response = request_date_span_from_baseball_savant(
@@ -160,7 +160,8 @@ argument_parser.add_argument(
 argument_parser.add_argument(
     '-v', '--verbose', action='store_true', help='display verbose logging')
 
-if __name__ == '__main__':
+
+def main():
     args = argument_parser.parse_args()
     if args.verbose:
         logging.basicConfig(level=logging.DEBUG)
@@ -199,4 +200,7 @@ if __name__ == '__main__':
                     last_game_date))
         else:
             logging.debug('Ending on yesterday: {}'.format(last_game_date))
-    main(first_game_date, last_game_date, directory_path)
+    get_data_between_dates(first_game_date, last_game_date, directory_path)
+
+if __name__ == '__main__':
+    main()
